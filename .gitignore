@@ -1,0 +1,9 @@
+# Credenciais privadas da base de dados
+/config/db.private.php
+
+# Ficheiros de testes temporários
+/teste/
+
+# Outros ficheiros com possíveis credenciais
+.env
+.env.local

@@ -1,0 +1,73 @@
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  border: none;
+  position: relative;
+  margin-bottom: 30px;
+  box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1),
+    0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1),
+    0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12),
+    0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
+}
+
+.l-bg-cherry {
+  background: linear-gradient(to right, #493240, #f09) !important;
+  color: #fff;
+}
+
+.l-bg-blue-dark {
+  background: linear-gradient(to right, #373b44, #4286f4) !important;
+  color: #fff;
+}
+
+.l-bg-green-dark {
+  background: linear-gradient(to right, #0a504a, #38ef7d) !important;
+  color: #fff;
+}
+
+.l-bg-orange-dark {
+  background: linear-gradient(to right, #a86008, #ffba56) !important;
+  color: #fff;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.admin-dashboard-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-dashboard-page > header {
+  flex-shrink: 0;
+}
+
+.admin-dashboard-container {
+  flex: 1;
+}
+.home-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  font-size: 24px;
+  color: #000;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.home-icon:hover {
+  color: #333;
+}
+.card .card-statistic-3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+}
+.card .card-statistic-3 .card-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
