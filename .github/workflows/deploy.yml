@@ -1,0 +1,48 @@
+name: Publicar no InfinityFree
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Publicar site
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obter ficheiros do GitHub
+        uses: actions/checkout@v4
+
+      - name: Enviar ficheiros para o InfinityFree
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+
+          protocol: ftps
+          port: 21
+
+          local-dir: ./
+          server-dir: ./htdocs/
+
+          dangerous-clean-slate: false
+
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.vscode/**
+            .vscode/**
+            config/db.private.php
+            **/config/db.private.php
+            .env
+            .env.local
+            teste/**
+            **/*.sql
