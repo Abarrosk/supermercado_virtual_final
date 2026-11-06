@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `organicos`
 --
-CREATE DATABASE IF NOT EXISTS `organicos` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `organicos`;
+-- CREATE DATABASE IF NOT EXISTS `organicos` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+-- USE `organicos`;
 
 -- --------------------------------------------------------
 
