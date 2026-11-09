@@ -46,5 +46,4 @@ jobs:
             .env.local
             teste/**
             **/*.sql
-            images/outras imagens/icons.svg
-            images/bebidas/leite-achocolatado.jpg
+            images/**
