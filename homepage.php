@@ -25,6 +25,7 @@ $recemChegados   = products_recentes(5);
     <head>
       <meta charset="utf-8" />
       <title>Orgânicos - Loja de Produtos Naturais - Homepage</title>
+      <link rel="icon" type="image/x-icon" href="images/icons/favicon.ico" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta name="format-detection" content="telephone=no" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
