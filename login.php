@@ -33,13 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <meta name="format-detection" content="telephone=no" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="author" content="Andre Barros" />
-      <meta name="robots" content="index, nofollow" />
+      <meta name="robots" content="noindex, nofollow" />
       <meta name="keywords" content="Orgânicos, supermercado online, produtos naturais, frutas, legumes, lacticínios, 
         ovos, mercearias, carne, peixe, marisco, padaria, pastelaria, conservas, massa, 
         arroz, bebidas, especiarias, temperos, alimentação saudável login" />
       <meta name="description" content="Compre online frutas, legumes, carne, peixe, padaria, 
         lacticínios e muito mais. Produtos orgânicos e frescos entregues em sua casa, em todo o país." />
-      <link rel="canonical" href="http://localhost/projecto_final/login.php" />
+      <link rel="canonical" href="https://abarrosk.rf.gd/login.php" />
     <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
     <link
       rel="stylesheet"

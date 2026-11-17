@@ -208,14 +208,14 @@ $orderId = $_SESSION['checkout_order_id'] ?? null;
       <meta name="format-detection" content="telephone=no" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="author" content="Andre Barros" />
-      <meta name="robots" content="index, nofollow" />
+      <meta name="robots" content="noindex, nofollow" />
       <meta name="keywords" content="Orgânicos, supermercado online, produtos naturais, frutas, legumes, lacticínios, 
         ovos, mercearias, carne, peixe, marisco, padaria, pastelaria, conservas, massa, 
         arroz, bebidas, especiarias, temperos, alimentação saudável checkout" />
       <meta name="description" content="Compre online frutas, legumes, carne, peixe, padaria, 
         lacticínios e muito mais. Produtos orgânicos e frescos entregues em sua casa, em todo o país." />
       <meta name="csrf-token" content="<?= e(csrf_token()) ?>">
-      <link rel="canonical" href="http://localhost/projecto_final/checkout.php" />
+      <link rel="canonical" href="https://abarrosk.rf.gd/checkout.php" />
       <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
         rel="stylesheet"

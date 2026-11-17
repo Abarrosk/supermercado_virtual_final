@@ -39,6 +39,7 @@ Foi desenvolvido como projeto de aprendizagem e de demonstração de competênci
 - Filtros por categoria e opção para apresentar todos os resultados.
 - Gestão de promoções, com preço promocional, percentagem de desconto e data de validade.
 - Cartões de produto gerados através de uma função PHP reutilizável.
+- **Carregamento diferido de imagens** com `loading="lazy"` nos cartões de produto.
 - Interface adaptável a diferentes dimensões de ecrã e carrosséis de produtos.
 
 **Código principal:** [`inc/products.php`](inc/products.php), [`inc/search.php`](inc/search.php), [`inc/render_card.php`](inc/render_card.php), [`homepage.php`](homepage.php) e [`comprar.php`](comprar.php).
@@ -46,6 +47,9 @@ Foi desenvolvido como projeto de aprendizagem e de demonstração de competênci
 ### Autenticação e área de cliente
 
 - Registo de utilizadores com validação de campos e verificação de emails duplicados.
+- **Início de sessão automático após o registo** de uma conta.
+- Validação de passwords no registo (mínimo de oito caracteres, uma letra e um número) e confirmação da password introduzida.
+- Alternância entre mostrar e ocultar passwords, com suporte a interações por rato, toque e teclado.
 - Autenticação através de email e password.
 - Gestão de sessões PHP e encerramento de sessão.
 - Consulta e atualização de informações pessoais.
@@ -64,6 +68,9 @@ Foi desenvolvido como projeto de aprendizagem e de demonstração de competênci
 - Atualização de valores da interface através de pedidos assíncronos JavaScript.
 - Verificação de disponibilidade de stock no checkout.
 - Validação dos dados de faturação, incluindo email, morada e data de nascimento.
+- **Validação de idade mínima de 18 anos** para concluir uma encomenda.
+- Atualização dos dados do perfil do cliente a partir dos dados fornecidos no checkout.
+- Endpoint de adição ao carrinho com **respostas JSON para pedidos assíncronos** e **redirecionamento para pedidos tradicionais**.
 - Cálculo de portes de envio de acordo com a distância estimada.
 - Registo de encomendas e dos respetivos artigos na base de dados.
 - Utilização de **transações SQL** durante a criação das encomendas, com `commit()` e `rollBack()`.
@@ -76,8 +83,11 @@ Foi desenvolvido como projeto de aprendizagem e de demonstração de competênci
 Acesso condicionado ao perfil de administrador, com funcionalidades de:
 
 - Listagem, criação, edição e eliminação de produtos, respeitando as restrições existentes.
+- **Proteção das relações com encomendas:** impede a eliminação de produtos que já estejam associados a artigos de encomendas.
 - Gestão de categorias associadas aos produtos, preços, promoções, datas e stock.
 - Associação e envio de imagens de produtos.
+- Organização dos ficheiros de imagem em pastas por categoria, criação das pastas quando necessário e normalização dos nomes dos ficheiros.
+- Confirmação de ações administrativas sensíveis na interface, como eliminar produtos ou desativar utilizadores.
 - Geração de _slugs_ legíveis e verificação de unicidade.
 - Listagem e pesquisa de utilizadores por diversos campos.
 - Desativação lógica de contas de utilizadores normais (_soft delete_).
@@ -116,6 +126,7 @@ Foram implementadas várias medidas de proteção, ilustrando conceitos importan
 | **Mitigação de XSS**              | Codificação de dados apresentados em HTML com `htmlspecialchars()` e função auxiliar `e()`                         | [`config/bootstrap.php`](config/bootstrap.php)                                                       |
 | **Proteção CSRF**                 | Tokens gerados com `random_bytes()`, incluídos em formulários e validados com `hash_equals()`                      | [`inc/csrf.php`](inc/csrf.php)                                                                       |
 | **Proteção de passwords**         | `password_hash()` e `password_verify()`; Argon2id quando disponível, com alternativa configurada                   | [`inc/auth.php`](inc/auth.php)                                                                       |
+| **Validação de passwords**         | Requisitos de comprimento, letras e números no registo; confirmação da password e validação na alteração        | [`registar.php`](registar.php), [`inc/auth.php`](inc/auth.php)                                       |
 | **Segurança de sessões**          | `HttpOnly`, `SameSite=Lax`, modo estrito e opção `Secure` em HTTPS; regeneração do identificador após autenticação | [`inc/security.php`](inc/security.php), [`inc/auth.php`](inc/auth.php)                               |
 | **Content Security Policy (CSP)** | Política de origens autorizadas e utilização de _nonce_ para determinados scripts                                  | [`inc/security.php`](inc/security.php)                                                               |
 | **Cabeçalhos HTTP**               | `X-Content-Type-Options`, `X-Frame-Options` e `Referrer-Policy`                                                    | [`config/bootstrap.php`](config/bootstrap.php)                                                       |
@@ -126,7 +137,7 @@ Foram implementadas várias medidas de proteção, ilustrando conceitos importan
 
 **Exemplos concretos:**
 
-- Os formulários protegidos incluem `csrf_field()`; o servidor usa `csrf_verify()` para rejeitar tokens inválidos.
+- Os formulários protegidos incluem `csrf_field()`; o servidor usa `csrf_verify()` para rejeitar tokens inválidos, incluindo nas operações de esvaziamento do carrinho e encerramento de sessão.
 - Os valores fornecidos pelos utilizadores são enviados como parâmetros das consultas SQL, em vez de serem concatenados diretamente nas instruções.
 - O acesso à administração depende de autenticação e da verificação de `is_admin`.
 - As palavras-passe são armazenadas sob a forma de _hashes_, não em texto simples.
@@ -166,11 +177,13 @@ A aplicação também utiliza objetos disponibilizados pelo PHP, nomeadamente `P
 - Iteração com `foreach`, `while` e estruturas condicionais.
 - Funções anónimas e _arrow functions_ (`fn`).
 - Operações com arrays, como `array_filter()`, `array_column()`, `array_sum()` e `array_fill()`.
+- Construção de cláusulas SQL `IN` com número variável de marcadores `?`, recorrendo a `array_fill()` e `implode()`, mantendo os valores parametrizados.
 - Expressões regulares com `preg_match()`, `preg_replace()` e `preg_split()`.
-- Normalização de nomes e geração de _slugs_.
-- Manipulação e comparação de datas com `DateTime` e `DateTimeImmutable`.
+- Normalização de nomes próprios com suporte a UTF-8 e tratamento de partículas como «de», «da» e «dos».
+- Transliteração de caracteres com `iconv()` e geração de _slugs_ legíveis e únicos.
+- Manipulação e comparação de datas com `DateTime` e `DateTimeImmutable`, incluindo cálculo de idade com `diff()`.
 - Formatação de valores monetários e datas.
-- Validação de dados com `filter_var()` e `FILTER_VALIDATE_EMAIL`.
+- Validação de dados com `filter_var()` e `FILTER_VALIDATE_EMAIL`, incluindo expressões regulares para o código postal e o telefone.
 - Exceções, tratamento de erros e códigos de resposta HTTP (`403`, `405`, `419`, `429`, entre outros).
 - Redirecionamentos HTTP, sessões e variáveis superglobais (`$_GET`, `$_POST`, `$_SESSION`, `$_FILES`).
 - Inclusão de módulos com `require` e `require_once`.
@@ -183,6 +196,8 @@ A aplicação também utiliza objetos disponibilizados pelo PHP, nomeadamente `P
 - Gestão de eventos com `addEventListener()` e `event.preventDefault()`.
 - Inicialização de código após `DOMContentLoaded`.
 - Validação e interação com formulários.
+- Alternância entre visibilidade e ocultação das passwords através de eventos de rato, toque e teclado.
+- Confirmação de determinadas operações administrativas através de `confirm()`.
 - Pedidos assíncronos com **`fetch()`**, tratamento de _promises_ com `.then()` e `.catch()`.
 - Envio de dados e interpretação de respostas **JSON**.
 - Atualização de totais e portes sem recarregar toda a página.

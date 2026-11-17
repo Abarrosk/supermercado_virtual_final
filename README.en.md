@@ -39,6 +39,7 @@ It was developed as a learning project and a demonstration of **full-stack web d
 - Category filters and an option to display all results.
 - Promotions with discounted prices, discount percentages and expiry dates.
 - Product cards generated through a reusable PHP function.
+- **Lazy loading of product images** with `loading="lazy"`.
 - Responsive interface and product carousels.
 
 **Main files:** [`inc/products.php`](inc/products.php), [`inc/search.php`](inc/search.php), [`inc/render_card.php`](inc/render_card.php), [`homepage.php`](homepage.php) and [`comprar.php`](comprar.php).
@@ -46,6 +47,9 @@ It was developed as a learning project and a demonstration of **full-stack web d
 ### Authentication and customer area
 
 - User registration, including field validation and duplicate-email checks.
+- **Automatic sign-in after successful registration**.
+- Registration password rules (at least eight characters, one letter and one digit) and password confirmation.
+- Show/hide password controls supporting mouse, touch and keyboard interactions.
 - Email-and-password authentication.
 - PHP session management and logout.
 - Viewing and updating personal information.
@@ -64,6 +68,9 @@ It was developed as a learning project and a demonstration of **full-stack web d
 - Asynchronous JavaScript requests to update values in the interface.
 - Stock availability checks at checkout.
 - Validation of billing information, including email, address and date of birth.
+- **Minimum age validation (18 years)** before completing an order.
+- Updating customer profile information using the billing details supplied at checkout.
+- Add-to-cart endpoint supporting **JSON responses for asynchronous requests** and **redirects for standard form submissions**.
 - Shipping cost calculation based on estimated distance.
 - Storage of orders and their line items in the database.
 - **SQL transactions** when creating orders, including `commit()` and `rollBack()`.
@@ -76,8 +83,11 @@ It was developed as a learning project and a demonstration of **full-stack web d
 Access restricted to administrator accounts, with features including:
 
 - Listing, creating, editing and deleting products, subject to existing constraints.
+- **Order data integrity:** prevents deleting products already referenced by order line items.
 - Managing product categories, prices, promotions, dates and stock information.
 - Uploading and associating product images.
+- Organising uploaded images into category-specific directories, creating directories when needed and sanitising file names.
+- Client-side confirmation before selected administrative actions, including product deletion and user deactivation.
 - Generating readable slugs and checking their uniqueness.
 - Listing and searching users using several fields.
 - Logically disabling standard user accounts (**soft delete**).
@@ -116,6 +126,7 @@ The project implements several security measures, demonstrating important web ap
 | **XSS mitigation**                | HTML output escaping through `htmlspecialchars()` and the `e()` helper function                                      | [`config/bootstrap.php`](config/bootstrap.php)                                                       |
 | **CSRF protection**               | Tokens generated with `random_bytes()`, included in forms and verified using `hash_equals()`                         | [`inc/csrf.php`](inc/csrf.php)                                                                       |
 | **Password protection**           | `password_hash()` and `password_verify()`; Argon2id where available, with a configured fallback                      | [`inc/auth.php`](inc/auth.php)                                                                       |
+| **Password validation**           | Registration length, letter and digit checks; confirmation and validation when changing passwords                    | [`registar.php`](registar.php), [`inc/auth.php`](inc/auth.php)                                       |
 | **Session security**              | `HttpOnly`, `SameSite=Lax`, strict session mode and `Secure` for HTTPS; session ID regeneration after authentication | [`inc/security.php`](inc/security.php), [`inc/auth.php`](inc/auth.php)                               |
 | **Content Security Policy (CSP)** | Policy restricting allowed sources and use of nonces for selected scripts                                            | [`inc/security.php`](inc/security.php)                                                               |
 | **HTTP security headers**         | `X-Content-Type-Options`, `X-Frame-Options` and `Referrer-Policy`                                                    | [`config/bootstrap.php`](config/bootstrap.php)                                                       |
@@ -126,7 +137,7 @@ The project implements several security measures, demonstrating important web ap
 
 **Examples:**
 
-- Protected forms include `csrf_field()`; the server uses `csrf_verify()` to reject invalid tokens.
+- Protected forms include `csrf_field()`; the server uses `csrf_verify()` to reject invalid tokens, including when clearing the cart and logging out.
 - User-supplied values are bound to SQL query parameters instead of being concatenated into SQL statements.
 - Dashboard access requires authentication and an `is_admin` check.
 - Passwords are stored as hashes rather than plaintext.
@@ -166,11 +177,13 @@ The application also uses PHP-provided objects, particularly `PDO`, `DateTime` a
 - Iteration with `foreach` and `while`, plus conditional statements.
 - Anonymous functions and **arrow functions** (`fn`).
 - Array operations such as `array_filter()`, `array_column()`, `array_sum()` and `array_fill()`.
+- Dynamic SQL `IN` placeholder lists built with `array_fill()` and `implode()`, while keeping user-supplied values parameterised.
 - Regular expressions using `preg_match()`, `preg_replace()` and `preg_split()`.
-- Name normalisation and slug generation.
-- Date operations and comparisons with `DateTime` and `DateTimeImmutable`.
+- UTF-8-aware personal name normalisation, including Portuguese particles such as “de”, “da” and “dos”.
+- Character transliteration using `iconv()` and generation of readable, unique slugs.
+- Date operations and comparisons with `DateTime` and `DateTimeImmutable`, including age calculation with `diff()`.
 - Currency and date formatting.
-- Input validation through `filter_var()` and `FILTER_VALIDATE_EMAIL`.
+- Input validation through `filter_var()` and `FILTER_VALIDATE_EMAIL`, including regular expressions for postal codes and phone numbers.
 - Exceptions, error handling and HTTP response codes (`403`, `405`, `419`, `429`, among others).
 - HTTP redirects, sessions and PHP superglobals (`$_GET`, `$_POST`, `$_SESSION`, `$_FILES`).
 - Modular includes with `require` and `require_once`.
@@ -183,6 +196,8 @@ The application also uses PHP-provided objects, particularly `PDO`, `DateTime` a
 - Event handling with `addEventListener()` and `event.preventDefault()`.
 - Code initialisation after `DOMContentLoaded`.
 - Form validation and interactions.
+- Password visibility controls using mouse, touch and keyboard events.
+- Confirmation of selected administrative actions through `confirm()`.
 - Asynchronous **`fetch()`** requests, with promises handled through `.then()` and `.catch()`.
 - Sending data and parsing **JSON** responses.
 - Updating order totals and shipping costs without reloading the whole page.

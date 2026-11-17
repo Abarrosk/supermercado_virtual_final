@@ -36,7 +36,7 @@ $recemChegados   = products_recentes(5);
         arroz, bebidas, especiarias, temperos, alimentação saudável homepage" />
       <meta name="description" content="Compre online frutas, legumes, carne, peixe, padaria, 
         lacticínios e muito mais. Produtos orgânicos e frescos entregues em sua casa, em todo o país." />
-      <link rel="canonical" href="http://localhost/projecto_final/homepage.php" />
+      <link rel="canonical" href="https://abarrosk.rf.gd/homepage.php" />
       <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
         rel="stylesheet"
