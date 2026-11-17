@@ -112,6 +112,7 @@ $recemChegados   = products_recentes(5);
           </a>
            <?php if (!empty($cart)): ?>
             <form method="post" action="api/cart_clear.php" class="mt-2">
+              <?= csrf_field() ?>
               <button class="w-100 btn btn-outline-secondary" type="submit">
                 Esvaziar carrinho
               </button>

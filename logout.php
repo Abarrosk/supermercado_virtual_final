@@ -8,6 +8,14 @@ Garante que a sessão é encerrada de forma consistente com a lógica central de
 Serve como “Sair” no menu da aplicação.*/
 
 require __DIR__ . '/config/bootstrap.php';
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    exit('Método não permitido');
+}
+
+csrf_verify($_POST['csrf'] ?? '');
+
 Auth::logout();
 header('Location: homepage.php');
 exit;

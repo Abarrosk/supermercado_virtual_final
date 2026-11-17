@@ -8,7 +8,7 @@ This project simulates an online supermarket: visitors can browse and search pro
 
 It was developed as a learning project and a demonstration of **full-stack web development** skills, with a particular focus on **PHP, relational databases, web security, external service integration and automated deployment**.
 
-**[Live demo](https://abarrosk.rf.gd/)** · **[Source code](https://github.com/Abarrosk/supermercado_virtual_final)**
+**[Live demo](https://abarrosk.rf.gd/homepage.php)** · **[Source code](https://github.com/Abarrosk/supermercado_virtual_final)**
 
 > **Note:** This is a demonstration application, not a commercial online store. It does not process real payments.
 
@@ -90,19 +90,19 @@ Access restricted to administrator accounts, with features including:
 
 ## Technologies and libraries
 
-| Area | Technologies | Purpose |
-| --- | --- | --- |
-| Backend | **PHP** | Application logic, authentication, sessions, forms and orders |
-| Database | **MySQL / MariaDB** | Relational storage of products, users and orders |
-| Data access | **PDO** | Database connections and parameterised SQL queries |
-| Frontend | **HTML5, CSS3, JavaScript** | Structure, presentation and interactivity |
-| Responsive UI | **Bootstrap 5** | Grid system, components, forms, modals and tooltips |
-| JavaScript libraries | **jQuery, Swiper.js 9** | UI manipulation and carousels |
-| Icons | **Font Awesome, Boxicons, Material Design Icons, SVG** | Interface graphics |
-| Asynchronous communication | **Fetch API, JSON** | Communication between the browser and PHP endpoints |
-| External services | **PHP cURL, Nominatim / OpenStreetMap** | Address geocoding |
-| Version control | **Git and GitHub** | Source control and project history |
-| Deployment | **GitHub Actions, FTPS, InfinityFree** | Automated application deployment |
+| Area                       | Technologies                                           | Purpose                                                       |
+| -------------------------- | ------------------------------------------------------ | ------------------------------------------------------------- |
+| Backend                    | **PHP**                                                | Application logic, authentication, sessions, forms and orders |
+| Database                   | **MySQL / MariaDB**                                    | Relational storage of products, users and orders              |
+| Data access                | **PDO**                                                | Database connections and parameterised SQL queries            |
+| Frontend                   | **HTML5, CSS3, JavaScript**                            | Structure, presentation and interactivity                     |
+| Responsive UI              | **Bootstrap 5**                                        | Grid system, components, forms, modals and tooltips           |
+| JavaScript libraries       | **jQuery, Swiper.js 9**                                | UI manipulation and carousels                                 |
+| Icons                      | **Font Awesome, Boxicons, Material Design Icons, SVG** | Interface graphics                                            |
+| Asynchronous communication | **Fetch API, JSON**                                    | Communication between the browser and PHP endpoints           |
+| External services          | **PHP cURL, Nominatim / OpenStreetMap**                | Address geocoding                                             |
+| Version control            | **Git and GitHub**                                     | Source control and project history                            |
+| Deployment                 | **GitHub Actions, FTPS, InfinityFree**                 | Automated application deployment                              |
 
 > The application uses **plain PHP, without Laravel or Symfony**. Bootstrap is the frontend framework; PDO, jQuery and Swiper are libraries or specialised programming interfaces.
 
@@ -110,19 +110,19 @@ Access restricted to administrator accounts, with features including:
 
 The project implements several security measures, demonstrating important web application security concepts. **These measures do not constitute a security audit or a guarantee that the application is free of vulnerabilities.**
 
-| Measure | Implementation | Reference |
-| --- | --- | --- |
-| **SQL injection mitigation** | Parameterised queries with `PDO::prepare()` and `execute()`; emulated prepared statements disabled | [`inc/db.php`](inc/db.php), [`inc/auth.php`](inc/auth.php), [`inc/search.php`](inc/search.php) |
-| **XSS mitigation** | HTML output escaping through `htmlspecialchars()` and the `e()` helper function | [`config/bootstrap.php`](config/bootstrap.php) |
-| **CSRF protection** | Tokens generated with `random_bytes()`, included in forms and verified using `hash_equals()` | [`inc/csrf.php`](inc/csrf.php) |
-| **Password protection** | `password_hash()` and `password_verify()`; Argon2id where available, with a configured fallback | [`inc/auth.php`](inc/auth.php) |
-| **Session security** | `HttpOnly`, `SameSite=Lax`, strict session mode and `Secure` for HTTPS; session ID regeneration after authentication | [`inc/security.php`](inc/security.php), [`inc/auth.php`](inc/auth.php) |
-| **Content Security Policy (CSP)** | Policy restricting allowed sources and use of nonces for selected scripts | [`inc/security.php`](inc/security.php) |
-| **HTTP security headers** | `X-Content-Type-Options`, `X-Frame-Options` and `Referrer-Policy` | [`config/bootstrap.php`](config/bootstrap.php) |
-| **Access control** | Authentication and administrator-role checks before access to the dashboard | [`inc/auth.php`](inc/auth.php), [`admin_dashboard.php`](admin_dashboard.php) |
-| **Login attempt limiting** | Basic, session-based limiting of failed login and password-change attempts | [`inc/auth.php`](inc/auth.php) |
-| **Server-side validation** | Required fields, emails, formats, permissions and checkout data are validated | [`registar.php`](registar.php), [`userProfile.php`](userProfile.php), [`checkout.php`](checkout.php) |
-| **Private configuration** | Database credentials kept in a separate file excluded from Git | [`inc/db.php`](inc/db.php), [`.gitignore`](.gitignore) |
+| Measure                           | Implementation                                                                                                       | Reference                                                                                            |
+| --------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **SQL injection mitigation**      | Parameterised queries with `PDO::prepare()` and `execute()`; emulated prepared statements disabled                   | [`inc/db.php`](inc/db.php), [`inc/auth.php`](inc/auth.php), [`inc/search.php`](inc/search.php)       |
+| **XSS mitigation**                | HTML output escaping through `htmlspecialchars()` and the `e()` helper function                                      | [`config/bootstrap.php`](config/bootstrap.php)                                                       |
+| **CSRF protection**               | Tokens generated with `random_bytes()`, included in forms and verified using `hash_equals()`                         | [`inc/csrf.php`](inc/csrf.php)                                                                       |
+| **Password protection**           | `password_hash()` and `password_verify()`; Argon2id where available, with a configured fallback                      | [`inc/auth.php`](inc/auth.php)                                                                       |
+| **Session security**              | `HttpOnly`, `SameSite=Lax`, strict session mode and `Secure` for HTTPS; session ID regeneration after authentication | [`inc/security.php`](inc/security.php), [`inc/auth.php`](inc/auth.php)                               |
+| **Content Security Policy (CSP)** | Policy restricting allowed sources and use of nonces for selected scripts                                            | [`inc/security.php`](inc/security.php)                                                               |
+| **HTTP security headers**         | `X-Content-Type-Options`, `X-Frame-Options` and `Referrer-Policy`                                                    | [`config/bootstrap.php`](config/bootstrap.php)                                                       |
+| **Access control**                | Authentication and administrator-role checks before access to the dashboard                                          | [`inc/auth.php`](inc/auth.php), [`admin_dashboard.php`](admin_dashboard.php)                         |
+| **Login attempt limiting**        | Basic, session-based limiting of failed login and password-change attempts                                           | [`inc/auth.php`](inc/auth.php)                                                                       |
+| **Server-side validation**        | Required fields, emails, formats, permissions and checkout data are validated                                        | [`registar.php`](registar.php), [`userProfile.php`](userProfile.php), [`checkout.php`](checkout.php) |
+| **Private configuration**         | Database credentials kept in a separate file excluded from Git                                                       | [`inc/db.php`](inc/db.php), [`.gitignore`](.gitignore)                                               |
 
 **Examples:**
 
@@ -194,13 +194,13 @@ The application also uses PHP-provided objects, particularly `PDO`, `DateTime` a
 
 The application uses a relational database with the following entities:
 
-| Table | Responsibility |
-| --- | --- |
-| `utilizadores` | Accounts, contact information, authentication and permissions |
-| `categorias` | Product classification |
-| `produtos` | Products, prices, promotions and stock |
-| `encomendas` | Order-level information |
-| `encomendas_itens` | Order line items and quantities |
+| Table              | Responsibility                                                |
+| ------------------ | ------------------------------------------------------------- |
+| `utilizadores`     | Accounts, contact information, authentication and permissions |
+| `categorias`       | Product classification                                        |
+| `produtos`         | Products, prices, promotions and stock                        |
+| `encomendas`       | Order-level information                                       |
+| `encomendas_itens` | Order line items and quantities                               |
 
 **SQL concepts demonstrated:**
 

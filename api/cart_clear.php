@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   http_response_code(405);
   exit('Método não permitido');
 }
-
+$token = $_POST['csrf'] ?? ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? '');
+csrf_verify($token);
 cart_clear();
 
 $back = $_SERVER['HTTP_REFERER'] ?? '../homepage.php';

@@ -8,7 +8,7 @@ Este projeto simula o funcionamento de um supermercado online: permite consultar
 
 Foi desenvolvido como projeto de aprendizagem e de demonstração de competências de **desenvolvimento web full-stack**, com particular atenção a **PHP, bases de dados relacionais, segurança web, integração com serviços externos e automatização da publicação**.
 
-**[Ver aplicação online](https://abarrosk.rf.gd/)** · **[Consultar o código-fonte](https://github.com/Abarrosk/supermercado_virtual_final)**
+**[Ver aplicação online](https://abarrosk.rf.gd/homepage.php)** · **[Consultar o código-fonte](https://github.com/Abarrosk/supermercado_virtual_final)**
 
 > **Nota:** trata-se de uma aplicação demonstrativa, não de uma loja comercial. Não processa pagamentos reais.
 
@@ -78,9 +78,9 @@ Acesso condicionado ao perfil de administrador, com funcionalidades de:
 - Listagem, criação, edição e eliminação de produtos, respeitando as restrições existentes.
 - Gestão de categorias associadas aos produtos, preços, promoções, datas e stock.
 - Associação e envio de imagens de produtos.
-- Geração de *slugs* legíveis e verificação de unicidade.
+- Geração de _slugs_ legíveis e verificação de unicidade.
 - Listagem e pesquisa de utilizadores por diversos campos.
-- Desativação lógica de contas de utilizadores normais (*soft delete*).
+- Desativação lógica de contas de utilizadores normais (_soft delete_).
 - Consulta e pesquisa de encomendas.
 - Visualização dos artigos e restantes detalhes de cada encomenda.
 
@@ -90,19 +90,19 @@ Acesso condicionado ao perfil de administrador, com funcionalidades de:
 
 ## Tecnologias e bibliotecas
 
-| Área | Tecnologias | Utilização |
-| --- | --- | --- |
-| Servidor | **PHP** | Lógica da aplicação, autenticação, sessões, formulários e encomendas |
-| Base de dados | **MySQL / MariaDB** | Persistência relacional de produtos, utilizadores e encomendas |
-| Acesso a dados | **PDO** | Ligação à base de dados e instruções SQL parametrizadas |
-| Interface | **HTML5, CSS3, JavaScript** | Estrutura, apresentação e interatividade |
-| Interface responsiva | **Bootstrap 5** | Grelhas, componentes, formulários, janelas modais e *tooltips* |
-| Bibliotecas JavaScript | **jQuery, Swiper.js 9** | Manipulação da interface e carrosséis |
-| Ícones | **Font Awesome, Boxicons, Material Design Icons, SVG** | Elementos gráficos da interface |
-| Comunicação assíncrona | **Fetch API, JSON** | Comunicação entre o navegador e os endpoints PHP |
-| Serviços externos | **PHP cURL, Nominatim / OpenStreetMap** | Geocodificação de moradas |
-| Controlo de versões | **Git e GitHub** | Histórico e gestão do código |
-| Publicação | **GitHub Actions, FTPS, InfinityFree** | Publicação automática dos ficheiros da aplicação |
+| Área                   | Tecnologias                                            | Utilização                                                           |
+| ---------------------- | ------------------------------------------------------ | -------------------------------------------------------------------- |
+| Servidor               | **PHP**                                                | Lógica da aplicação, autenticação, sessões, formulários e encomendas |
+| Base de dados          | **MySQL / MariaDB**                                    | Persistência relacional de produtos, utilizadores e encomendas       |
+| Acesso a dados         | **PDO**                                                | Ligação à base de dados e instruções SQL parametrizadas              |
+| Interface              | **HTML5, CSS3, JavaScript**                            | Estrutura, apresentação e interatividade                             |
+| Interface responsiva   | **Bootstrap 5**                                        | Grelhas, componentes, formulários, janelas modais e _tooltips_       |
+| Bibliotecas JavaScript | **jQuery, Swiper.js 9**                                | Manipulação da interface e carrosséis                                |
+| Ícones                 | **Font Awesome, Boxicons, Material Design Icons, SVG** | Elementos gráficos da interface                                      |
+| Comunicação assíncrona | **Fetch API, JSON**                                    | Comunicação entre o navegador e os endpoints PHP                     |
+| Serviços externos      | **PHP cURL, Nominatim / OpenStreetMap**                | Geocodificação de moradas                                            |
+| Controlo de versões    | **Git e GitHub**                                       | Histórico e gestão do código                                         |
+| Publicação             | **GitHub Actions, FTPS, InfinityFree**                 | Publicação automática dos ficheiros da aplicação                     |
 
 > A aplicação foi desenvolvida em **PHP sem recurso a Laravel ou Symfony**. Bootstrap é o framework de interface utilizado; PDO, jQuery e Swiper são bibliotecas ou interfaces específicas.
 
@@ -110,26 +110,26 @@ Acesso condicionado ao perfil de administrador, com funcionalidades de:
 
 Foram implementadas várias medidas de proteção, ilustrando conceitos importantes de segurança em aplicações web. A existência destas medidas **não equivale a uma auditoria de segurança nem à ausência de vulnerabilidades**.
 
-| Medida | Implementação | Referência |
-| --- | --- | --- |
-| **Mitigação de SQL Injection** | Consultas parametrizadas com `PDO::prepare()` e `execute()`; emulação de instruções preparadas desativada | [`inc/db.php`](inc/db.php), [`inc/auth.php`](inc/auth.php), [`inc/search.php`](inc/search.php) |
-| **Mitigação de XSS** | Codificação de dados apresentados em HTML com `htmlspecialchars()` e função auxiliar `e()` | [`config/bootstrap.php`](config/bootstrap.php) |
-| **Proteção CSRF** | Tokens gerados com `random_bytes()`, incluídos em formulários e validados com `hash_equals()` | [`inc/csrf.php`](inc/csrf.php) |
-| **Proteção de passwords** | `password_hash()` e `password_verify()`; Argon2id quando disponível, com alternativa configurada | [`inc/auth.php`](inc/auth.php) |
-| **Segurança de sessões** | `HttpOnly`, `SameSite=Lax`, modo estrito e opção `Secure` em HTTPS; regeneração do identificador após autenticação | [`inc/security.php`](inc/security.php), [`inc/auth.php`](inc/auth.php) |
-| **Content Security Policy (CSP)** | Política de origens autorizadas e utilização de *nonce* para determinados scripts | [`inc/security.php`](inc/security.php) |
-| **Cabeçalhos HTTP** | `X-Content-Type-Options`, `X-Frame-Options` e `Referrer-Policy` | [`config/bootstrap.php`](config/bootstrap.php) |
-| **Controlo de acesso** | Verificação de autenticação e do papel de administrador antes de aceder ao painel | [`inc/auth.php`](inc/auth.php), [`admin_dashboard.php`](admin_dashboard.php) |
-| **Limitação de tentativas** | Controlo básico, por sessão, de tentativas falhadas de login e de alteração de password | [`inc/auth.php`](inc/auth.php) |
-| **Validação no servidor** | Verificação de campos obrigatórios, emails, formatos, permissões e dados de checkout | [`registar.php`](registar.php), [`userProfile.php`](userProfile.php), [`checkout.php`](checkout.php) |
-| **Configuração privada** | Credenciais da base de dados num ficheiro separado, excluído do Git | [`inc/db.php`](inc/db.php), [`.gitignore`](.gitignore) |
+| Medida                            | Implementação                                                                                                      | Referência                                                                                           |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| **Mitigação de SQL Injection**    | Consultas parametrizadas com `PDO::prepare()` e `execute()`; emulação de instruções preparadas desativada          | [`inc/db.php`](inc/db.php), [`inc/auth.php`](inc/auth.php), [`inc/search.php`](inc/search.php)       |
+| **Mitigação de XSS**              | Codificação de dados apresentados em HTML com `htmlspecialchars()` e função auxiliar `e()`                         | [`config/bootstrap.php`](config/bootstrap.php)                                                       |
+| **Proteção CSRF**                 | Tokens gerados com `random_bytes()`, incluídos em formulários e validados com `hash_equals()`                      | [`inc/csrf.php`](inc/csrf.php)                                                                       |
+| **Proteção de passwords**         | `password_hash()` e `password_verify()`; Argon2id quando disponível, com alternativa configurada                   | [`inc/auth.php`](inc/auth.php)                                                                       |
+| **Segurança de sessões**          | `HttpOnly`, `SameSite=Lax`, modo estrito e opção `Secure` em HTTPS; regeneração do identificador após autenticação | [`inc/security.php`](inc/security.php), [`inc/auth.php`](inc/auth.php)                               |
+| **Content Security Policy (CSP)** | Política de origens autorizadas e utilização de _nonce_ para determinados scripts                                  | [`inc/security.php`](inc/security.php)                                                               |
+| **Cabeçalhos HTTP**               | `X-Content-Type-Options`, `X-Frame-Options` e `Referrer-Policy`                                                    | [`config/bootstrap.php`](config/bootstrap.php)                                                       |
+| **Controlo de acesso**            | Verificação de autenticação e do papel de administrador antes de aceder ao painel                                  | [`inc/auth.php`](inc/auth.php), [`admin_dashboard.php`](admin_dashboard.php)                         |
+| **Limitação de tentativas**       | Controlo básico, por sessão, de tentativas falhadas de login e de alteração de password                            | [`inc/auth.php`](inc/auth.php)                                                                       |
+| **Validação no servidor**         | Verificação de campos obrigatórios, emails, formatos, permissões e dados de checkout                               | [`registar.php`](registar.php), [`userProfile.php`](userProfile.php), [`checkout.php`](checkout.php) |
+| **Configuração privada**          | Credenciais da base de dados num ficheiro separado, excluído do Git                                                | [`inc/db.php`](inc/db.php), [`.gitignore`](.gitignore)                                               |
 
 **Exemplos concretos:**
 
 - Os formulários protegidos incluem `csrf_field()`; o servidor usa `csrf_verify()` para rejeitar tokens inválidos.
 - Os valores fornecidos pelos utilizadores são enviados como parâmetros das consultas SQL, em vez de serem concatenados diretamente nas instruções.
 - O acesso à administração depende de autenticação e da verificação de `is_admin`.
-- As palavras-passe são armazenadas sob a forma de *hashes*, não em texto simples.
+- As palavras-passe são armazenadas sob a forma de _hashes_, não em texto simples.
 
 ## Programação orientada a objetos e padrões de desenho
 
@@ -164,10 +164,10 @@ A aplicação também utiliza objetos disponibilizados pelo PHP, nomeadamente `P
 - `declare(strict_types=1)` em módulos selecionados.
 - Arrays associativos e multidimensionais.
 - Iteração com `foreach`, `while` e estruturas condicionais.
-- Funções anónimas e *arrow functions* (`fn`).
+- Funções anónimas e _arrow functions_ (`fn`).
 - Operações com arrays, como `array_filter()`, `array_column()`, `array_sum()` e `array_fill()`.
 - Expressões regulares com `preg_match()`, `preg_replace()` e `preg_split()`.
-- Normalização de nomes e geração de *slugs*.
+- Normalização de nomes e geração de _slugs_.
 - Manipulação e comparação de datas com `DateTime` e `DateTimeImmutable`.
 - Formatação de valores monetários e datas.
 - Validação de dados com `filter_var()` e `FILTER_VALIDATE_EMAIL`.
@@ -175,7 +175,7 @@ A aplicação também utiliza objetos disponibilizados pelo PHP, nomeadamente `P
 - Redirecionamentos HTTP, sessões e variáveis superglobais (`$_GET`, `$_POST`, `$_SESSION`, `$_FILES`).
 - Inclusão de módulos com `require` e `require_once`.
 
-**Nota sobre recursividade:** nas funções analisadas não foi identificada uma função que se invoque a si própria. A criação de *slugs* únicos utiliza um ciclo `while` (iteração), **não recursividade**.
+**Nota sobre recursividade:** nas funções analisadas não foi identificada uma função que se invoque a si própria. A criação de _slugs_ únicos utiliza um ciclo `while` (iteração), **não recursividade**.
 
 ### JavaScript
 
@@ -183,10 +183,10 @@ A aplicação também utiliza objetos disponibilizados pelo PHP, nomeadamente `P
 - Gestão de eventos com `addEventListener()` e `event.preventDefault()`.
 - Inicialização de código após `DOMContentLoaded`.
 - Validação e interação com formulários.
-- Pedidos assíncronos com **`fetch()`**, tratamento de *promises* com `.then()` e `.catch()`.
+- Pedidos assíncronos com **`fetch()`**, tratamento de _promises_ com `.then()` e `.catch()`.
 - Envio de dados e interpretação de respostas **JSON**.
 - Atualização de totais e portes sem recarregar toda a página.
-- Utilização de funções anónimas, *callbacks* e `forEach()`.
+- Utilização de funções anónimas, _callbacks_ e `forEach()`.
 - Isolamento de código através de uma **IIFE** em [`js/homepage.js`](js/homepage.js).
 - Configuração de carrosséis responsivos com **Swiper.js**.
 
@@ -194,13 +194,13 @@ A aplicação também utiliza objetos disponibilizados pelo PHP, nomeadamente `P
 
 A aplicação utiliza uma base de dados relacional com as seguintes entidades:
 
-| Tabela | Responsabilidade |
-| --- | --- |
-| `utilizadores` | Contas, dados de contacto, autenticação e permissões |
-| `categorias` | Classificação do catálogo |
-| `produtos` | Produtos, preços, promoções e stock |
-| `encomendas` | Dados gerais das encomendas |
-| `encomendas_itens` | Artigos e quantidades de cada encomenda |
+| Tabela             | Responsabilidade                                     |
+| ------------------ | ---------------------------------------------------- |
+| `utilizadores`     | Contas, dados de contacto, autenticação e permissões |
+| `categorias`       | Classificação do catálogo                            |
+| `produtos`         | Produtos, preços, promoções e stock                  |
+| `encomendas`       | Dados gerais das encomendas                          |
+| `encomendas_itens` | Artigos e quantidades de cada encomenda              |
 
 **Conceitos SQL aplicados:**
 
